@@ -177,7 +177,7 @@ The bank-wide picture of customers, accounts and transactions.
 - Sankey diagram of transaction amount flowing from customer residence to destination country
 - Matrix of foreign transaction counts by customer residence and destination country
 
-![Overview](docs/images/overview.png)
+![Overview](docs/images/Overview.png)
 
 ### 2. Risk Info
 What did the detection rules find, and how risky is it?
