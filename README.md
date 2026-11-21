@@ -27,7 +27,7 @@ An end-to-end Anti-Money Laundering (AML) monitoring prototype built on a **synt
 13. [Repository structure](#repository-structure)
 14. [Limitations](#limitations)
 15. [Possible improvements](#possible-improvements)
-16. [Author](#author)
+
 
 ---
 
