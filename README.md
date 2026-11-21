@@ -96,7 +96,7 @@ High-risk countries used: Cayman Islands, Panama, Switzerland.
 
 ## Data model
 
-![Data model](docs/images/data_model.png)
+![Data model](Images/Data_Model.png)
 
 Star schema in Power BI. Some relationships are intentionally **inactive** to avoid ambiguous filter paths between tables.
 
@@ -177,7 +177,7 @@ The bank-wide picture of customers, accounts and transactions.
 - Sankey diagram of transaction amount flowing from customer residence to destination country
 - Matrix of foreign transaction counts by customer residence and destination country
 
-![Overview](docs/images/Overview.png)
+![Overview](Images/Overview.png)
 
 ### 2. Risk Info
 What did the detection rules find, and how risky is it?
@@ -191,7 +191,7 @@ What did the detection rules find, and how risky is it?
 - Transaction value by destination country (donut chart)
 - Transaction value by type (treemap)
 
-![Risk Info](docs/images/risk_info.png)
+![Risk Info](Images/Risk_Info.png)
 
 ### 3. Accounts Info
 Look up a single customer or account.
@@ -206,7 +206,7 @@ Look up a single customer or account.
 - Transaction detail table (ID, date, type, amount, destination country, channel)
 - Transaction value by type (treemap)
 
-![Accounts Info](docs/images/accounts_info.png)
+![Accounts Info](Images/Accounts_Info.png)
 
 ---
 
