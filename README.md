@@ -279,15 +279,24 @@ The Sankey and violin plot are custom visuals, so Power BI may ask you to allow 
 
 ```
 .
+AML-Transaction-Monitoring/
+│
 ├── README.md
 ├── requirements.txt
 ├── .gitignore
+├── LICENSE
+│
 ├── generator/
-│   └── generate_data.py
+│   └── Data generation.ipynb
+│
 ├── sql/
-│   └── aml_pipeline.sql
+│   └── AML_pipeline.sql
+│
 ├── powerbi/
-│   └── AML_Dashboard.pbib
+│   ├── AML_dashboard.pbip
+│   ├── AML_dashboard.Report/
+│   └── AML_dashboard.SemanticModel/
+│
 └── docs/
     └── images/
         ├── overview.png
