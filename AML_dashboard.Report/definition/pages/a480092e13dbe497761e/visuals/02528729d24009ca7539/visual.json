@@ -1,0 +1,62 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "02528729d24009ca7539",
+  "position": {
+    "x": 805,
+    "y": 15,
+    "z": 8000,
+    "height": 147.5,
+    "width": 535,
+    "tabOrder": 8000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "public vw_account_risk"
+                        }
+                      },
+                      "Property": "full_name"
+                    }
+                  },
+                  "Function": 3
+                }
+              },
+              "queryRef": "Min(public vw_account_risk.full_name)",
+              "nativeQueryRef": "First full_name"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "public vw_account_risk"
+                        }
+                      },
+                      "Property": "customer_id"
+                    }
+                  },
+                  "Function": 3
+                }
+              },
+              "queryRef": "Min(public vw_account_risk.customer_id)",
+              "nativeQueryRef": "First customer_id"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

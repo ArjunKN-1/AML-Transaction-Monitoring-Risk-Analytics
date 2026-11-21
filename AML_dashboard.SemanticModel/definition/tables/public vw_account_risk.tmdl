@@ -1,0 +1,90 @@
+table 'public vw_account_risk'
+	lineageTag: 782940bd-778e-4679-8219-ad2be09c75fb
+
+	column account_id
+		dataType: string
+		lineageTag: 1f065ada-a721-4d6e-a777-c9379f1da4c1
+		summarizeBy: none
+		sourceColumn: account_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: string
+		lineageTag: 0056c76a-87b9-4993-a005-82e70f619cc7
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column full_name
+		dataType: string
+		lineageTag: dac2bb6d-91a4-4a70-8305-4ffdba02da6b
+		summarizeBy: none
+		sourceColumn: full_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column risk_rating
+		dataType: string
+		lineageTag: 65a24d1f-edbd-4cbe-a80d-97d456011dfd
+		summarizeBy: none
+		sourceColumn: risk_rating
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_pep
+		dataType: int64
+		formatString: 0
+		lineageTag: 172ce467-38bd-4e4f-8303-7f31491f8cd5
+		summarizeBy: sum
+		sourceColumn: is_pep
+
+		annotation SummarizationSetBy = Automatic
+
+	column rules_triggered
+		dataType: int64
+		formatString: 0
+		lineageTag: 802c5c70-5eea-48b4-bc64-1c845f9a1c59
+		summarizeBy: sum
+		sourceColumn: rules_triggered
+
+		annotation SummarizationSetBy = Automatic
+
+	column risk_score
+		dataType: int64
+		formatString: 0
+		lineageTag: 1449fdc2-f428-4cf9-b1a3-66902f39786e
+		summarizeBy: sum
+		sourceColumn: risk_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Risk Band' =
+			
+			SWITCH(
+			    TRUE(),
+			    ISBLANK('public vw_account_risk'[risk_score]), BLANK(),
+			    'public vw_account_risk'[risk_score] >= 45, "High",
+			    'public vw_account_risk'[risk_score] <= 25, "Low",
+			    "Medium"
+			)
+		lineageTag: aafa5de7-a576-4ad7-b6f3-e3b7bf860975
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public vw_account_risk' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "AML Project"),
+				    public_vw_account_risk = Source{[Schema="public",Item="vw_account_risk"]}[Data],
+				    #"Cleaned Text" = Table.TransformColumns(Table.TransformColumnTypes(public_vw_account_risk, {{"account_id", type text}, {"customer_id", type text}}, "en-IN"),{{"account_id", Text.Clean, type text}, {"customer_id", Text.Clean, type text}})
+				in
+				    #"Cleaned Text"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

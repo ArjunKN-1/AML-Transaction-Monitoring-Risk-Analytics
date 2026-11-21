@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "AML_dashboard"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "e4d36856-9973-4d75-85e2-d7f62e6cda35"
+  }
+}

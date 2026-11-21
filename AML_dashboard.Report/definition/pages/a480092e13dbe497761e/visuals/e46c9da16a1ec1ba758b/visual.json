@@ -1,0 +1,45 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "e46c9da16a1ec1ba758b",
+  "position": {
+    "x": 0,
+    "y": 15,
+    "z": 5000,
+    "height": 90,
+    "width": 340,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "textSlicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "public vw_account_risk"
+                    }
+                  },
+                  "Property": "account_id"
+                }
+              },
+              "queryRef": "public vw_account_risk.account_id",
+              "nativeQueryRef": "account_id"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "general": [
+        {
+          "properties": {}
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

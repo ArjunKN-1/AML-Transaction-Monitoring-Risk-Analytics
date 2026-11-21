@@ -1,0 +1,114 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 294.67014250546544,
+            "y": 151.63685530778753
+          },
+          "nodeIndex": "public dim_accounts",
+          "nodeLineageTag": "58bb13d5-9ef6-4b7d-b42f-198afd37833f",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 632.45497088774869,
+            "y": 72.708638008835123
+          },
+          "nodeIndex": "public dim_customers",
+          "nodeLineageTag": "70d85fed-35e6-49e9-8aaf-5b13b691973e",
+          "size": {
+            "height": 249.94468229788731,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 295.76937819591535,
+            "y": 396.06376549435737
+          },
+          "nodeIndex": "public dim_date",
+          "nodeLineageTag": "5613750f-f226-41c0-89ae-731f3a069a53",
+          "size": {
+            "height": 215.56680937873239,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 1022.0607634275111,
+            "y": 235.23178616751164
+          },
+          "nodeIndex": "public fact_transactions",
+          "nodeLineageTag": "c580cf6d-a241-4506-9279-2eb86ffc4049",
+          "size": {
+            "height": 446.69419413910794,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 655.33084580563752,
+            "y": 409.34664054490645
+          },
+          "nodeIndex": "public vw_account_risk",
+          "nodeLineageTag": "782940bd-778e-4679-8219-ad2be09c75fb",
+          "size": {
+            "height": 305.07830105535209,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 911.59155034964817,
+            "y": 22.48539132483566
+          },
+          "nodeIndex": "public vw_alerts",
+          "nodeLineageTag": "e98e744e-e326-4dd0-bab9-8c3b1a4446d2",
+          "size": {
+            "height": 153.94468229788731,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 286.41146183945682,
+            "y": 59.175606267998489
+          },
+          "nodeIndex": "Measures Table",
+          "nodeLineageTag": "577b9aa4-3815-4f59-9c4b-64a3966f36f1",
+          "size": {
+            "height": 72,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 104
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 57.815315785236876,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

@@ -1,0 +1,173 @@
+table 'public fact_transactions'
+	lineageTag: c580cf6d-a241-4506-9279-2eb86ffc4049
+
+	column transaction_id
+		dataType: string
+		lineageTag: 682dbd6a-a24c-4b2d-9b13-48116cc591d8
+		summarizeBy: none
+		sourceColumn: transaction_id
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_id
+		dataType: string
+		lineageTag: 6a0c0a7c-ef29-4f30-a11a-aa6bb5652f0b
+		summarizeBy: none
+		sourceColumn: account_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column transaction_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 387fe5da-b8a3-41d6-9a35-f7819a536f53
+		summarizeBy: none
+		sourceColumn: transaction_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column transaction_type
+		dataType: string
+		lineageTag: 8baa0f02-b903-4208-96ec-e7a60d643036
+		summarizeBy: none
+		sourceColumn: transaction_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column amount
+		dataType: double
+		lineageTag: 6e681fb2-afcd-4eef-ba15-1844476bf6a5
+		summarizeBy: sum
+		sourceColumn: amount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column destination_country
+		dataType: string
+		lineageTag: e6e60a40-e2d2-4bfa-bb89-661fb335645d
+		summarizeBy: none
+		sourceColumn: destination_country
+
+		annotation SummarizationSetBy = Automatic
+
+	column channel
+		dataType: string
+		lineageTag: a08c9a22-158d-40c3-a958-d1c9846f8620
+		summarizeBy: none
+		sourceColumn: channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column counterparty_account_id
+		dataType: string
+		lineageTag: 8e36ba42-078b-493b-8708-13173489d372
+		summarizeBy: none
+		sourceColumn: counterparty_account_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Cash Bin' = ```
+			
+			IF(
+			    'public fact_transactions'[transaction_type] = "Cash Deposit",
+			    FLOOR('public fact_transactions'[amount], 50000), 
+			    BLANK()
+			)
+			```
+		formatString: 0
+		lineageTag: 4c2857b8-d489-4743-9894-ce8663eeb1a4
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id = ```
+			
+			LOOKUPVALUE(
+			    'public dim_accounts'[customer_id], 
+			    'public dim_accounts'[account_id], 
+			    'public fact_transactions'[account_id]
+			)
+			```
+		lineageTag: 67317ea3-caab-4ff6-9189-1ed9014d3d7e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column counterparty_customer_id = ```
+			
+			LOOKUPVALUE(
+			    'public dim_accounts'[customer_id], 
+			    'public dim_accounts'[account_id], 
+			    'public fact_transactions'[counterparty_account_id]
+			)
+			```
+		lineageTag: d25f0d6f-1e64-40d7-9988-b0ab18b3704c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column transaction_month = ```
+			FORMAT('public fact_transactions'[transaction_date], "MMM YYYY")
+			
+			```
+		dataType: dateTime
+		formatString: mmmm\, yyyy
+		lineageTag: d0ccf8c6-2755-4f62-8bb0-8f4c45adfefa
+		summarizeBy: none
+
+		variation Variation
+			isDefault
+			relationship: 775795cc-f8f7-44d6-a8ad-b7909af32292
+			defaultHierarchy: LocalDateTable_3b3b9ff2-8088-45fd-801e-b66723de4868.'Date Hierarchy'
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Customer Residence' = ```
+			LOOKUPVALUE ( 'public dim_customers'[country_of_residence], 'public dim_customers'[customer_id], 'public fact_transactions'[customer_id])
+			
+			```
+		lineageTag: bea646e9-5540-42d5-86b1-244170a7689e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Foregin_Transcs = ```
+			
+			IF(
+			    'public fact_transactions'[Customer Residence] <> 'public fact_transactions'[destination_country], 
+			    1, 
+			    0
+			)
+			```
+		formatString: 0
+		lineageTag: ea4a8046-6083-472c-9652-e25fac2e060b
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public fact_transactions' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "AML Project"),
+				    public_fact_transactions = Source{[Schema="public",Item="fact_transactions"]}[Data],
+				    #"Cleaned Text" = Table.TransformColumns(Table.TransformColumnTypes(public_fact_transactions, {{"account_id", type text}, {"counterparty_account_id", type text}}, "en-IN"),{{"account_id", Text.Clean, type text}, {"counterparty_account_id", Text.Clean, type text}})
+				in
+				    #"Cleaned Text"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

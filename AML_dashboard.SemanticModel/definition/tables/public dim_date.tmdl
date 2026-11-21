@@ -1,0 +1,62 @@
+table 'public dim_date'
+	lineageTag: 5613750f-f226-41c0-89ae-731f3a069a53
+	dataCategory: Time
+
+	column date_key
+		dataType: dateTime
+		isKey
+		formatString: Long Date
+		lineageTag: 24142c47-6fc5-4ff7-819e-d035abd4a216
+		summarizeBy: none
+		sourceColumn: date_key
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: 7118237a-e46a-474e-a104-8bcb193cb9a4
+		summarizeBy: none
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column month
+		dataType: int64
+		formatString: 0
+		lineageTag: 9191b137-d314-47cd-a66d-297a856956d9
+		summarizeBy: none
+		sourceColumn: month
+
+		annotation SummarizationSetBy = Automatic
+
+	column month_name
+		dataType: string
+		lineageTag: 26bbecef-4e90-4270-8b99-a10b1d63805c
+		summarizeBy: none
+		sourceColumn: month_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_weekend
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: ec66b6fd-40a3-411f-b121-0ffe43821adb
+		summarizeBy: none
+		sourceColumn: is_weekend
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public dim_date' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "AML Project"),
+				    public_dim_date = Source{[Schema="public",Item="dim_date"]}[Data]
+				in
+				    public_dim_date
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,167 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "eadb30b257530e88c0be",
+  "position": {
+    "x": 0,
+    "y": 624.60952662612522,
+    "z": 1000,
+    "height": 379.30833071477423,
+    "width": 769.97319827729621,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "public fact_transactions"
+                    }
+                  },
+                  "Property": "transaction_id"
+                }
+              },
+              "queryRef": "public fact_transactions.transaction_id",
+              "nativeQueryRef": "transaction_id"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "public fact_transactions"
+                    }
+                  },
+                  "Property": "transaction_date"
+                }
+              },
+              "queryRef": "public fact_transactions.transaction_date",
+              "nativeQueryRef": "transaction_date"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "public fact_transactions"
+                    }
+                  },
+                  "Property": "transaction_type"
+                }
+              },
+              "queryRef": "public fact_transactions.transaction_type",
+              "nativeQueryRef": "transaction_type"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "public fact_transactions"
+                        }
+                      },
+                      "Property": "amount"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(public fact_transactions.amount)",
+              "nativeQueryRef": "Sum of amount"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "public fact_transactions"
+                    }
+                  },
+                  "Property": "destination_country"
+                }
+              },
+              "queryRef": "public fact_transactions.destination_country",
+              "nativeQueryRef": "destination_country"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "public fact_transactions"
+                    }
+                  },
+                  "Property": "channel"
+                }
+              },
+              "queryRef": "public fact_transactions.channel",
+              "nativeQueryRef": "channel"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "public fact_transactions"
+                    }
+                  },
+                  "Property": "counterparty_account_id"
+                }
+              },
+              "queryRef": "public fact_transactions.counterparty_account_id",
+              "nativeQueryRef": "counterparty_account_id"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "values": [
+        {
+          "properties": {
+            "backColorPrimary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": -0.1
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "13D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "13D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

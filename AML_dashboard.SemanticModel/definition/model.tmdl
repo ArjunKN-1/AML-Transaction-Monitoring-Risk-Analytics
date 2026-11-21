@@ -1,0 +1,28 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-IN
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["public vw_account_risk","public vw_alerts","public dim_accounts","public dim_customers","public dim_date","public fact_transactions","Measures (2)","Measures Table"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table 'public vw_account_risk'
+ref table 'public vw_alerts'
+ref table 'public dim_accounts'
+ref table DateTableTemplate_8660ed0c-4541-4a6f-b577-d4f67ccaba2b
+ref table LocalDateTable_70575677-49bc-4a82-92d4-efe4b1cd813d
+ref table 'public dim_customers'
+ref table 'public dim_date'
+ref table 'public fact_transactions'
+ref table 'Measures Table'
+ref table LocalDateTable_3b3b9ff2-8088-45fd-801e-b66723de4868
+
+ref cultureInfo en-US
+

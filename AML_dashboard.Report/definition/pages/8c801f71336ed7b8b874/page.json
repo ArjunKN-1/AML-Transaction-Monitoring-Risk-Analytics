@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "8c801f71336ed7b8b874",
+  "displayName": "Risk Info",
+  "displayOption": "FitToPage",
+  "height": 1080,
+  "width": 1920
+}

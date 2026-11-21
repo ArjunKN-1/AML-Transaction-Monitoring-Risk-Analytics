@@ -1,0 +1,46 @@
+table 'public vw_alerts'
+	lineageTag: e98e744e-e326-4dd0-bab9-8c3b1a4446d2
+
+	column account_id
+		dataType: string
+		lineageTag: ddb49938-0bbf-4543-a405-94d65e134d51
+		summarizeBy: none
+		sourceColumn: account_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column rule
+		dataType: string
+		lineageTag: 73f4ef72-050c-4550-af22-02aab3566977
+		summarizeBy: none
+		sourceColumn: rule
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id = ```
+			
+			LOOKUPVALUE(
+			    'public dim_accounts'[customer_id], 
+			    'public dim_accounts'[account_id], 
+			    'public vw_alerts'[account_id]
+			)
+			```
+		lineageTag: ba60784f-6196-476a-a43f-a2894abfd991
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public vw_alerts' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "AML Project"),
+				    public_vw_alerts = Source{[Schema="public",Item="vw_alerts"]}[Data],
+				    #"Cleaned Text" = Table.TransformColumns(Table.TransformColumnTypes(public_vw_alerts, {{"account_id", type text}}, "en-IN"),{{"account_id", Text.Clean, type text}})
+				in
+				    #"Cleaned Text"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

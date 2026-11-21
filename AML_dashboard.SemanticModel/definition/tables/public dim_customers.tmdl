@@ -1,0 +1,66 @@
+table 'public dim_customers'
+	lineageTag: 70d85fed-35e6-49e9-8aaf-5b13b691973e
+
+	column customer_id
+		dataType: string
+		lineageTag: d9253d33-8f50-44fa-a112-f3627b24090a
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column full_name
+		dataType: string
+		lineageTag: 916ac58d-da71-4216-836c-61234db9f55c
+		summarizeBy: none
+		sourceColumn: full_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column occupation
+		dataType: string
+		lineageTag: 10de3ba2-e845-4e9e-a9b0-1a952a09da00
+		summarizeBy: none
+		sourceColumn: occupation
+
+		annotation SummarizationSetBy = Automatic
+
+	column risk_rating
+		dataType: string
+		lineageTag: 116b4cf3-d03d-4eba-bb42-e6dda295a186
+		summarizeBy: none
+		sourceColumn: risk_rating
+
+		annotation SummarizationSetBy = Automatic
+
+	column country_of_residence
+		dataType: string
+		lineageTag: 5041c87e-e06f-4ad4-b1fa-79194f745909
+		summarizeBy: none
+		sourceColumn: country_of_residence
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_pep
+		dataType: int64
+		formatString: 0
+		lineageTag: ec740f5b-8172-417c-b437-34784de06040
+		summarizeBy: sum
+		sourceColumn: is_pep
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'public dim_customers' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "AML Project"),
+				    public_dim_customers = Source{[Schema="public",Item="dim_customers"]}[Data],
+				    #"Cleaned Text" = Table.TransformColumns(Table.TransformColumnTypes(public_dim_customers, {{"customer_id", type text}}, "en-IN"),{{"customer_id", Text.Clean, type text}})
+				in
+				    #"Cleaned Text"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

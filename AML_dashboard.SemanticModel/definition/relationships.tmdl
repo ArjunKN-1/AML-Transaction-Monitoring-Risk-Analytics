@@ -1,0 +1,48 @@
+relationship 08fbed6e-8a5f-429b-9c45-9520828d15ed
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'public dim_accounts'.open_date
+	toColumn: LocalDateTable_70575677-49bc-4a82-92d4-efe4b1cd813d.Date
+
+relationship 71058c53-aa68-8097-068c-2c19cfa87dd9
+	crossFilteringBehavior: bothDirections
+	fromColumn: 'public dim_accounts'.customer_id
+	toColumn: 'public dim_customers'.customer_id
+
+	annotation PBI_IsFromSource = FS
+
+relationship 41970327-0c6b-0ade-22e8-585f6fad6668
+	isActive: false
+	fromColumn: 'public vw_alerts'.account_id
+	toColumn: 'public dim_accounts'.account_id
+
+relationship 0427a29f-3d7b-0a9c-aebe-f566b3c4e1f0
+	crossFilteringBehavior: bothDirections
+	fromColumn: 'public vw_account_risk'.account_id
+	toColumn: 'public dim_accounts'.account_id
+
+relationship 5006fe9c-e8f1-1497-ca37-3ca7816da1ac
+	fromColumn: 'public fact_transactions'.transaction_date
+	toColumn: 'public dim_date'.date_key
+
+relationship 775795cc-f8f7-44d6-a8ad-b7909af32292
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'public fact_transactions'.transaction_month
+	toColumn: LocalDateTable_3b3b9ff2-8088-45fd-801e-b66723de4868.Date
+
+relationship 094f09c9-6df0-18da-a073-ac689b29c0ba
+	fromColumn: 'public fact_transactions'.customer_id
+	toColumn: 'public dim_customers'.customer_id
+
+relationship b25af0f1-efd6-7af7-189c-5dc39d321aa1
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromColumn: 'public fact_transactions'.account_id
+	toColumn: 'public dim_accounts'.account_id
+
+	annotation PBI_IsFromSource = FS
+
+relationship f229838a-0397-93fd-9495-cc30907ac110
+	crossFilteringBehavior: bothDirections
+	fromColumn: 'public fact_transactions'.account_id
+	toColumn: 'public vw_alerts'.account_id
+

@@ -1,0 +1,151 @@
+table 'Measures Table'
+	lineageTag: 577b9aa4-3815-4f59-9c4b-64a3966f36f1
+
+	measure 'Total Volume' = SUM('public fact_transactions'[amount])
+		lineageTag: 76fb76da-4c7c-4dcf-934c-28dfb61cb18b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Txn Count' = COUNTROWS('public fact_transactions')
+		formatString: 0
+		lineageTag: 2d21cdff-8619-45e0-b1a8-0e3713381d0e
+
+	measure 'Total Alerts' = COUNTROWS('public vw_alerts')
+		formatString: 0
+		lineageTag: 25fda0cc-49e6-479f-ae99-944cd4cdf8d4
+
+	measure 'Flagged Accounts' = DISTINCTCOUNT('public vw_alerts'[account_id])
+		formatString: 0
+		lineageTag: 2daf738e-8afa-49f7-9af2-8f8c38324806
+
+	measure 'High Risk Accounts' = ```
+			
+			CALCULATE(
+			    COUNTROWS('public vw_account_risk'), 
+			    'public vw_account_risk'[risk_score] >= 40
+			)
+			```
+		formatString: 0
+		lineageTag: 1d30db01-f9c0-4efd-956f-993c6937a65b
+
+	measure 'Alert Rate %' = ```
+			
+			DIVIDE(
+			    [Flagged Accounts], 
+			    DISTINCTCOUNT('public dim_accounts'[account_id])
+			)
+			```
+		lineageTag: 1f59a3d3-9979-4a82-a3cd-7e7bb1899eef
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Wire Out Amount' = ```
+			
+			CALCULATE(
+			    [Total Volume], 
+			    'public fact_transactions'[transaction_type] = "Wire Transfer Out"
+			)
+			```
+		lineageTag: ad594c05-f5d7-4c50-b524-ec7ad97e914b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Foreign Wire Out' = ```
+			
+			CALCULATE(
+			    [Wire Out Amount], 
+			    'public fact_transactions'[destination_country] <> "India"
+			)
+			```
+		lineageTag: 4ef2892a-4d1b-4832-b9d6-fd2adc48643b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'High Risk Corridor Amt' =
+			
+			CALCULATE(
+			    [Wire Out Amount],
+			    'public fact_transactions'[destination_country] IN {"Cayman Islands", "Panama", "Switzerland"}
+			)
+		lineageTag: c8fc0b0d-95fb-4d91-b842-cfc1bf3bf2bc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total Out' = ```
+			
+			CALCULATE([Total Volume],
+			    'public fact_transactions'[transaction_type] IN {"ATM Withdrawal", "UPI Payment", "Wire Transfer Out", "Crypto Purchase"})
+			
+			```
+		lineageTag: 4d72dc0b-ecc0-4e76-9e26-c20676ba6735
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total In' = ```
+			
+			CALCULATE([Total Volume],
+			    'public fact_transactions'[transaction_type] IN {"Cash Deposit", "Salary Credit", "Wire Transfer In"})
+			
+			```
+		lineageTag: 7af1a3e1-5698-4970-8b95-44dc5dae2d88
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Rules Hit' = SUM('public vw_account_risk'[rules_triggered])
+		formatString: 0
+		lineageTag: 110f91ac-462b-4895-b296-45f7689be2e6
+
+	measure 'Account Risk Score' = MAX('public vw_account_risk'[risk_score])
+		formatString: 0
+		lineageTag: fb743f41-4bf3-473f-8fa5-e5394c40c2da
+
+		changedProperty = IsHidden
+
+	measure 'PEP Status' = IF(MAX('public vw_account_risk'[is_pep]) = 1, "PEP", "Not PEP")
+		lineageTag: 69a32e65-9f3d-4534-80c0-b639d24be031
+
+	measure Recall =
+			
+			DIVIDE(SUM('public vw_rule_performance'[true_positives]),
+			       SUM('public vw_rule_performance'[guilty_accounts]))
+		lineageTag: dc2cad3f-b74a-400c-9a33-8fbdbf37c6e1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Precision =
+			
+			DIVIDE(SUM('public vw_rule_performance'[true_positives]),
+			       SUM('public vw_rule_performance'[alerts_raised]))
+		lineageTag: cd170057-f1e1-460c-9d65-1f19d0c35d5a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Overall Precision' = [Precision]
+		lineageTag: 72382b6f-1e2d-454f-aaab-51ac094981bc
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Overall Recall' = [Recall]
+		formatString: 0
+		lineageTag: 36d45109-ca96-403c-9a05-1826ee011c69
+
+	measure 'Flagged Customer Accounts' = DISTINCTCOUNT('public vw_alerts'[customer_id])
+		formatString: 0
+		lineageTag: e64cb13f-7218-45ea-bcab-fea3d67abcb2
+
+	partition 'Measures Table' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1"})
+				in
+				    #"Removed Columns"
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+

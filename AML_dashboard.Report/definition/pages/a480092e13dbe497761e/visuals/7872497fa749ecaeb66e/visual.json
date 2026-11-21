@@ -1,0 +1,104 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "7872497fa749ecaeb66e",
+  "position": {
+    "x": 1357.5,
+    "y": 12.5,
+    "z": 11000,
+    "height": 150,
+    "width": 542.5,
+    "tabOrder": 11000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "public dim_accounts"
+                        }
+                      },
+                      "Property": "open_date"
+                    }
+                  },
+                  "Function": 3
+                }
+              },
+              "queryRef": "Min(public dim_accounts.open_date)",
+              "nativeQueryRef": "Earliest open_date"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "public dim_customers"
+                        }
+                      },
+                      "Property": "country_of_residence"
+                    }
+                  },
+                  "Function": 3
+                }
+              },
+              "queryRef": "Min(public dim_customers.country_of_residence)",
+              "nativeQueryRef": "First country_of_residence"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "public dim_customers"
+                        }
+                      },
+                      "Property": "occupation"
+                    }
+                  },
+                  "Function": 3
+                }
+              },
+              "queryRef": "Min(public dim_customers.occupation)",
+              "nativeQueryRef": "First occupation"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "public dim_accounts"
+                      }
+                    },
+                    "Property": "open_date"
+                  }
+                },
+                "Function": 3
+              }
+            },
+            "direction": "Ascending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

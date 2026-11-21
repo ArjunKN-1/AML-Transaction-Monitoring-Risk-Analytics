@@ -1,0 +1,69 @@
+table 'public dim_accounts'
+	lineageTag: 58bb13d5-9ef6-4b7d-b42f-198afd37833f
+
+	column account_id
+		dataType: string
+		lineageTag: c578e093-b3ac-462f-8e56-fc84026aac16
+		summarizeBy: none
+		sourceColumn: account_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: string
+		lineageTag: e1017c40-641c-4e1f-bae2-e82deee1e1b4
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column account_type
+		dataType: string
+		lineageTag: 2c2504dd-1737-4db8-a050-59cb6dd8cbb0
+		summarizeBy: none
+		sourceColumn: account_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column open_date
+		dataType: dateTime
+		formatString: dd-mm-yyyy
+		lineageTag: a481ffb5-5a8c-4127-9455-79278270954a
+		summarizeBy: none
+		sourceColumn: open_date
+
+		variation Variation
+			isDefault
+			relationship: 08fbed6e-8a5f-429b-9c45-9520828d15ed
+			defaultHierarchy: LocalDateTable_70575677-49bc-4a82-92d4-efe4b1cd813d.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column current_balance
+		dataType: double
+		lineageTag: 6098a72c-edb7-40f1-a925-14fe65c78fcd
+		summarizeBy: sum
+		sourceColumn: current_balance
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'public dim_accounts' = m
+		mode: import
+		source =
+				let
+				    Source = PostgreSQL.Database("localhost", "AML Project"),
+				    public_dim_accounts = Source{[Schema="public",Item="dim_accounts"]}[Data],
+				    #"Cleaned Text" = Table.TransformColumns(Table.TransformColumnTypes(public_dim_accounts, {{"account_id", type text}, {"customer_id", type text}}, "en-IN"),{{"account_id", Text.Clean, type text}, {"customer_id", Text.Clean, type text}})
+				in
+				    #"Cleaned Text"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
