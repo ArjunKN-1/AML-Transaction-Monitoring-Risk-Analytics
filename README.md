@@ -287,8 +287,7 @@ The Sankey and violin plot are custom visuals, so Power BI may ask you to allow 
 ├── sql/
 │   └── aml_pipeline.sql
 ├── powerbi/
-│   └── AML_Dashboard.pbix
-├── data/                 (created by the generator, not committed)
+│   └── AML_Dashboard.pbib
 └── docs/
     └── images/
         ├── overview.png
