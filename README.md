@@ -262,7 +262,7 @@ This creates a `data/` folder with `customers.csv`, `accounts.csv`, `transaction
 **2. Build the database**
 1. In PostgreSQL, run `CREATE DATABASE aml_project;` and connect to it.
 2. Run STEP 1 of `sql/aml_pipeline.sql` to create the tables.
-3. From the repository root, in `psql`, run the four `\copy` lines in STEP 2.
+3. Import the four CSV datasets into their respective tables using pgAdmin's Import/Export Data feature.
 4. Run the rest of the script: indexes, `dim_date`, quality checks, rule views, `vw_alerts` and `vw_account_risk`.
 
 **3. Open the dashboard**
