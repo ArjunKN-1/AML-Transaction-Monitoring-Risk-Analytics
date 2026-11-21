@@ -242,8 +242,8 @@ These findings come from synthetic data in which the patterns were planted on pu
 | Area | What is shown |
 |---|---|
 | Python | Synthetic data generation, statistical distributions |
-| SQL |  keys and indexes, CTEs, window functions, self-joins, views, `CASE` scoring |
-| Power BI | Schema modelling, DAX measures and calculated columns, custom visuals (Sankey, violin plot), funnel, gauge, treemap, area chart, conditional formatting, slicers |
+| SQL |  Keys and Indexes, CTEs, window functions, self-joins, views, `CASE` scoring |
+| Power BI | Schema Modelling, DAX measures and calculated columns, custom visuals (Sankey, violin plot), funnel, gauge, treemap, area chart, conditional formatting, slicers |
 
 
 ---
