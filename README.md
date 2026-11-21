@@ -58,8 +58,7 @@ This project builds the monitoring and triage layer that answers those questions
 flowchart LR
     A[Python generator<br/>synthetic bank data] --> B[(PostgreSQL<br/>star schema)]
     B --> C[SQL detection rules<br/>three views]
-    C --> D[vw_alerts and<br/>vw_account_risk]
-    D --> E[Power BI<br/>dashboard]
+    C --> D[Power BI<br/>dashboard]
 ```
 
 | Stage | File | Output |
