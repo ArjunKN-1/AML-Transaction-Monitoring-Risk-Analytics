@@ -325,6 +325,4 @@ This is a learning and portfolio project, not a production AML system.
 ---
 
 
-[GitHub](https://github.com/your-username)
-
 Feedback and suggestions are welcome.
