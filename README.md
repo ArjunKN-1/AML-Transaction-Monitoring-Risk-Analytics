@@ -45,7 +45,7 @@ This project builds the monitoring and triage layer that answers those questions
 ## What this project does
 
 1. **Generates** a fake bank: 5,000 customers, 6,463 accounts and about 666,000 transactions for the year 2025.
-2. **Plants** three money-laundering patterns, plus decoy accounts, inside normal activity.
+2. **Plants** three money-laundering patterns, inside normal activity.
 3. **Detects** the patterns with SQL rules (window functions and self-joins) in PostgreSQL.
 4. **Scores** every account by combining rule alerts with customer risk attributes.
 5. **Visualises** everything in a three-page Power BI dashboard: **Overview**, **Risk Info** and **Accounts Info**.
@@ -86,7 +86,6 @@ The generator builds normal behaviour first, then injects suspicious patterns.
 | Rapid movement of funds | Large incoming wire, then 80-95% wired to a high-risk country within 2 days | 40 |
 | Round tripping | Money moving A → B → C → A, shrinking about 1% per hop | 75 (25 rings) |
 
-**Decoys:** 30 business accounts make two mid-size cash deposits (₹4.5-5.5 lakh) so that not every large deposit is a crime.
 
 High-risk countries used: Cayman Islands, Panama, Switzerland.
 
@@ -311,10 +310,8 @@ AML-Transaction-Monitoring/
 This is a learning and portfolio project, not a production AML system.
 
 - **The data is synthetic.** The suspicious patterns were planted by the same author who wrote the detection rules, so the rules finding the planted cases only confirms that the pipeline works as designed. It is not evidence of detection accuracy on real data.
-- **Detection performance was not formally evaluated.** Precision and recall were deliberately left out of scope.
 - **Rule-based only.** Real institutions combine rules with statistical or machine-learning models, case management systems and analyst feedback.
 - **Customer risk rating is random** here. In a real bank it comes from onboarding checks and carries information.
-- **`destination_country` defaults to India** for non-wire transactions, so `Foreign_Transcs` and the foreign-transaction matrix on the Overview page are only meaningful for outgoing wire and crypto transactions. Customers living outside India show large counts "to India" for this reason.
 - **Thresholds are illustrative.** The ₹10 lakh limit, the 3-day window and the score weights are assumptions, not regulatory guidance.
 
 ---
@@ -322,8 +319,6 @@ This is a learning and portfolio project, not a production AML system.
 ## Possible improvements
 
 - Add an `alert_date` to each rule to show alert trends over time.
-- Restrict `Foreign_Transcs` to wire and crypto transactions so the foreign-transaction matrix is accurate.
-- Make the synthetic crimes messier, with more variation and harder look-alike innocent accounts, then measure precision and recall.
 - Add a What-if parameter for investigator capacity to show how many priority cases can be covered each week.
 - Add anomaly detection (for example, unusual spending versus an account's own history).
 - Apply Row-Level Security by region.
