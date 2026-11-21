@@ -241,10 +241,10 @@ These findings come from synthetic data in which the patterns were planted on pu
 
 | Area | What is shown |
 |---|---|
-| Python | Synthetic data generation, statistical distributions, reproducible random seed |
-| SQL | Star-schema DDL, keys and indexes, `generate_series` date table, data-quality checks, CTEs, window functions, self-joins, views, `CASE` scoring |
-| Power BI | Power Query typing, star-schema modelling, active and inactive relationships, DAX measures and calculated columns, custom visuals (Sankey, violin plot), funnel, gauge, treemap, area chart, conditional formatting, slicers |
-| Domain | Structuring, rapid movement of funds, round tripping, PEPs, high-risk jurisdictions, alert prioritisation |
+| Python | Synthetic data generation, statistical distributions |
+| SQL |  keys and indexes, CTEs, window functions, self-joins, views, `CASE` scoring |
+| Power BI | Schema modelling, DAX measures and calculated columns, custom visuals (Sankey, violin plot), funnel, gauge, treemap, area chart, conditional formatting, slicers |
+
 
 ---
 
