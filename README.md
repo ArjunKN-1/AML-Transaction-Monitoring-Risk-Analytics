@@ -6,7 +6,7 @@ An end-to-end Anti-Money Laundering (AML) monitoring prototype built on a **synt
 
 > **Note:** All data in this repository is synthetic. No real customers, accounts or transactions are used.
 
-![Risk Info page](docs/images/risk_info.png)
+![Risk Info page](Images/Risk Info.png)
 
 ---
 
